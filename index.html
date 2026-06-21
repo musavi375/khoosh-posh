@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>خوش‌پوش ملایر</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
@@ -32,6 +33,7 @@
       text-decoration: none;
       font-weight: bold;
       cursor: pointer;
+      display: inline-block;
     }
 
     section {
@@ -137,6 +139,84 @@
       top: 5px;
       left: 5px;
     }
+
+    /* موبایل */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 20px;
+      }
+
+      nav {
+        padding: 10px;
+      }
+
+      nav a {
+        display: block;
+        margin: 8px 0;
+      }
+
+      section {
+        padding: 20px 10px;
+      }
+
+      .gallery {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .gallery img {
+        width: 90%;
+        height: auto;
+      }
+
+      #cart-box {
+        top: 10px;
+        left: 10px;
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+
+      .btn {
+        font-size: 12px;
+        padding: 5px 10px;
+      }
+
+      input, select {
+        width: 90%;
+      }
+    }
+
+    /* تبلت */
+    @media (min-width: 600px) and (max-width: 900px) {
+      nav a {
+        margin: 0 10px;
+      }
+
+      .gallery img {
+        width: 45%;
+        height: auto;
+      }
+
+      section {
+        padding: 30px 15px;
+      }
+
+      input, select {
+        width: 300px;
+      }
+    }
+
+    /* لپ‌تاپ و دسکتاپ بزرگ */
+    @media (min-width: 900px) {
+      .gallery img {
+        width: 200px;
+        height: 260px;
+      }
+
+      input, select {
+        width: 250px;
+      }
+    }
   </style>
 </head>
 
@@ -145,7 +225,6 @@
 <header>
   <h1>خوش‌پوش ملایر</h1>
 </header>
-
 <nav>
   <a id="nav-manto" onclick="showSection('manto')">مانتو</a>
   <a id="nav-coat" onclick="showSection('coat')">کت</a>
@@ -255,8 +334,7 @@
 <!-- افزودن محصول (فقط بعد از ایمیل درست) -->
 <section id="add-product" style="display:none;">
   <h2>افزودن محصول جدید</h2>
-
-  <input id="newName" type="text" placeholder="نام محصول"><br>
+<input id="newName" type="text" placeholder="نام محصول"><br>
   <input id="newPrice" type="number" placeholder="قیمت محصول"><br>
   <input id="newImage" type="text" placeholder="نام فایل عکس (مثلاً p9.png)"><br>
 
@@ -291,7 +369,8 @@
   window.onload = function () {
     showSection('manto');
   };
-function showSection(id) {
+
+  function showSection(id) {
     var sections = document.getElementsByTagName('section');
     for (var i = 0; i < sections.length; i++) {
       sections[i].style.display = 'none';
@@ -386,13 +465,12 @@ function showSection(id) {
   function createNewSection(newSectionName) {
     var id = 'sec-' + Date.now();
     var galleryId = id + '-gallery';
-
-    var nav = document.querySelector('nav');
+var nav = document.querySelector('nav');
     var a = document.createElement('a');
     a.textContent = newSectionName;
     a.setAttribute('onclick', "showSection('" + id + "')");
     a.id = 'nav-' + id;
-    nav.appendChild(a);
+    nav.insertBefore(a, document.getElementById('nav-cart'));
 
     var sec = document.createElement('section');
     sec.id = id;
@@ -420,7 +498,8 @@ function showSection(id) {
       alert("شما اجازه افزودن محصول را ندارید.");
       return;
     }
-var name = document.getElementById("newName").value;
+
+    var name = document.getElementById("newName").value;
     var price = document.getElementById("newPrice").value;
     var image = document.getElementById("newImage").value;
     var sectionValue = document.getElementById("sectionSelect").value;
