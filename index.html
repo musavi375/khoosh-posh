@@ -1,48 +1,511 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Khosh Posh | خیاطی تخصصی</title>
-  <link rel="stylesheet" href="style.css">
+  <title>خوش‌پوش ملایر</title>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #1A1A2E;
+      color: #FFD700;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+    }
+
+    header {
+      background-color: #0F3460;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      text-align: center;
+      background-color: #16213E;
+      padding: 15px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: #FFD700;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    section {
+      padding: 40px 20px;
+      text-align: center;
+      display: none;
+    }
+
+    .gallery {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .gallery img {
+      width: 200px;
+      height: 260px;
+      border: 2px solid #FFD700;
+      border-radius: 10px;
+      transition: transform 0.3s;
+      cursor: pointer;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    #fullscreen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #fullscreen img {
+      max-width: 85vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border: 3px solid #FFD700;
+      border-radius: 10px;
+    }
+
+    #cart-box {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #FFD700;
+      color: #1A1A2E;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10000;
+    }
+
+    .btn {
+      background: #FFD700;
+      color: #1A1A2E;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 6px;
+      display: inline-block;
+      font-size: 13px;
+    }
+
+    input, select {
+      padding: 10px;
+      width: 250px;
+      border-radius: 8px;
+      border: 1px solid #FFD700;
+      margin-bottom: 10px;
+    }
+
+    .product-item {
+      border: 1px solid #FFD700;
+      border-radius: 10px;
+      padding: 10px;
+      position: relative;
+    }
+
+    .menu-btn {
+      background: transparent;
+      border: none;
+      color: #FFD700;
+      cursor: pointer;
+      font-size: 18px;
+      margin-right: 8px;
+    }
+
+    .product-item .menu-btn {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+    }
+  </style>
 </head>
+
 <body>
-  <header>
-    <h1>Khosh Posh</h1>
-    <nav>
-      <a href="#home">خانه</a>
-      <a href="#gallery">نمونه‌کارها</a>
-      <a href="#about">درباره ما</a>
-      <a href="#contact">ارتباط با ما</a>
-    </nav>
-  </header>
 
-  <section id="home">
-    <h2>جایی که سوزن هنر می آفریند</h2>
-    <p>خیاطی تخصصی با طراحی‌های منحصربه‌فرد برای بانوان خوش‌پوش</p>
-  </section>
+<header>
+  <h1>خوش‌پوش ملایر</h1>
+</header>
 
-  <section id="gallery">
-    <h2>نمونه‌کارها</h2>
-    <div class="gallery">
-      <img src="sample1.jpg" alt="لباس مجلسی">
-      <img src="sample2.jpg" alt="مانتو">
-      <img src="sample3.jpg" alt="ست خاص">
-      <img src="coat1.jpg" alt="کت ">
-      <img src="coat2.jpg" alt="کت ">
-      <img src="coat3.jpg" alt="کت ">
-      <img src="coat4.jpg" alt="کت ">
-  </a>
+<nav>
+  <a id="nav-manto" onclick="showSection('manto')">مانتو</a>
+  <a id="nav-coat" onclick="showSection('coat')">کت</a>
+  <a id="nav-shomiz" onclick="showSection('shomiz')">شومیز</a>
+  <a id="nav-dok" onclick="showSection('dok')">دوک نخ</a>
+  <a id="nav-email" onclick="showSection('email')">ایمیل</a>
+  <a id="nav-cart" onclick="showSection('cart-page')">سبد خرید</a>
+</nav>
+
+<div id="cart-box" onclick="showSection('cart-page')">
+  🛒 سبد خرید: <span id="cart-count">0</span>
 </div>
-  
-  </section>
 
-  <section id="about">
-    <h2>درباره ما</h2>
-    <p>من موسوی هستم، طراح و خیاط با سال‌ها تجربه در دوخت لباس‌های مختلف.
-  </section>
+<div id="fullscreen" onclick="this.style.display='none'">
+  <img id="full-img">
+</div>
 
-  <section id="about">
-    <h2>ارتباط با ما</h2>
-    <p>@musavi1389 : ایدی تلگرام
-    <p>ایدی روبیکا: @mosavipiroz
+<!-- مانتو -->
+<section id="manto">
+  <h2>
+    مانتو
+    <button class="menu-btn" onclick="requestDeleteSection('manto')" title="حذف کردن">⋮</button>
+  </h2>
+  <div class="gallery" id="manto-gallery">
+    <div class="product-item">
+      <button class="menu-btn" onclick="requestDeleteProduct(this)" title="حذف کردن">⋮</button>
+      <img src="manteau.png" onclick="openFull('manteau.png')">
+      <div class="price">۲,۵۰۰,۰۰۰ تومان</div>
+      <div class="btn" onclick="addToCart('مانتو',2500000)">افزودن به سبد خرید</div>
+    </div>
+  </div>
+</section>
+
+<!-- کت -->
+<section id="coat">
+  <h2>
+    کت
+    <button class="menu-btn" onclick="requestDeleteSection('coat')" title="حذف کردن">⋮</button>
+  </h2>
+  <div class="gallery" id="coat-gallery">
+    <div class="product-item">
+      <button class="menu-btn" onclick="requestDeleteProduct(this)" title="حذف کردن">⋮</button>
+      <img src="coat-set.png" onclick="openFull('coat-set.png')">
+      <div class="price">۳,۰۰۰,۰۰۰ تومان</div>
+      <div class="btn" onclick="addToCart('کت و شلوار',3000000)">افزودن به سبد خرید</div>
+    </div>
+
+    <div class="product-item">
+      <button class="menu-btn" onclick="requestDeleteProduct(this)" title="حذف کردن">⋮</button>
+      <img src="coat-sarafon.png" onclick="openFull('coat-sarafon.png')">
+      <div class="price">۴,۸۰۰,۰۰۰ تومان</div>
+      <div class="btn" onclick="addToCart('کت و سارافون',4800000)">افزودن به سبد خرید</div>
+    </div>
+  </div>
+</section>
+
+<!-- شومیز -->
+<section id="shomiz">
+  <h2>
+    شومیز
+    <button class="menu-btn" onclick="requestDeleteSection('shomiz')" title="حذف کردن">⋮</button>
+  </h2>
+  <div class="gallery" id="shomiz-gallery">
+    <div class="product-item">
+      <button class="menu-btn" onclick="requestDeleteProduct(this)" title="حذف کردن">⋮</button>
+      <img src="shomiz.png" onclick="openFull('shomiz.png')">
+      <div class="price">۹۰۰,۰۰۰ تومان</div>
+      <div class="btn" onclick="addToCart('شومیز مدل ۱',900000)">افزودن به سبد خرید</div>
+    </div>
+
+    <div class="product-item">
+      <button class="menu-btn" onclick="requestDeleteProduct(this)" title="حذف کردن">⋮</button>
+      <img src="shomiz2.png" onclick="openFull('shomiz2.png')">
+      <div class="price">۹۰۰,۰۰۰ تومان</div>
+      <div class="btn" onclick="addToCart('شومیز مدل ۲',900000)">افزودن به سبد خرید</div>
+    </div>
+  </div>
+</section>
+
+<!-- دوک نخ -->
+<section id="dok">
+  <h2>
+    دوک نخ
+    <button class="menu-btn" onclick="requestDeleteSection('dok')" title="حذف کردن">⋮</button>
+  </h2>
+  <div class="gallery" id="dok-gallery">
+    <div class="product-item">
+      <button class="menu-btn" onclick="requestDeleteProduct(this)" title="حذف کردن">⋮</button>
+      <img src="dok.png" onclick="openFull('dok.png')">
+      <div class="price">۲۱۰,۰۰۰ تومان</div>
+      <div class="btn" onclick="addToCart('دوک نخ',210000)">افزودن به سبد خرید</div>
+    </div>
+  </div>
+</section>
+
+<!-- ایمیل -->
+<section id="email">
+  <h2>ورود ایمیل</h2>
+  <p>برای افزودن محصول جدید و حذف/افزودن قسمت‌ها، ایمیل مخصوص را وارد کنید:</p>
+
+  <input id="emailInput" type="email" placeholder="ایمیل را وارد کنید">
+  <div class="btn" onclick="checkEmail()">تایید</div>
+
+  <p id="emailMessage"></p>
+</section>
+
+<!-- افزودن محصول (فقط بعد از ایمیل درست) -->
+<section id="add-product" style="display:none;">
+  <h2>افزودن محصول جدید</h2>
+
+  <input id="newName" type="text" placeholder="نام محصول"><br>
+  <input id="newPrice" type="number" placeholder="قیمت محصول"><br>
+  <input id="newImage" type="text" placeholder="نام فایل عکس (مثلاً p9.png)"><br>
+
+  <br>
+  <label>این محصول در کدام قسمت قرار بگیرد؟</label><br>
+  <select id="sectionSelect" onchange="onSectionChange()">
+    <option value="manto-gallery">مانتو</option>
+    <option value="coat-gallery">کت</option>
+    <option value="shomiz-gallery">شومیز</option>
+    <option value="dok-gallery">دوک نخ</option>
+    <option value="new-section">➕ افزودن قسمت جدید</option>
+  </select><br>
+
+  <input id="newSectionName" type="text" placeholder="نام قسمت جدید" style="display:none;"><br>
+
+  <div class="btn" onclick="addNewProduct()">افزودن محصول</div>
+
+  <p id="addMessage"></p>
+</section>
+
+<!-- سبد خرید -->
+<section id="cart-page">
+  <h2>سبد خرید</h2>
+  <div id="cart-items"></div>
+  <h3>جمع کل: <span id="total-price">0</span> تومان</h3>
+</section>
+
+<script>
+  var cart = [];
+  var isAdmin = false;
+
+  window.onload = function () {
+    showSection('manto');
+  };
+function showSection(id) {
+    var sections = document.getElementsByTagName('section');
+    for (var i = 0; i < sections.length; i++) {
+      sections[i].style.display = 'none';
+    }
+    var target = document.getElementById(id);
+    if (target) {
+      target.style.display = 'block';
+    }
+  }
+
+  function openFull(src) {
+    document.getElementById('full-img').src = src;
+    document.getElementById('fullscreen').style.display = 'flex';
+  }
+
+  function addToCart(name, price) {
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].name === name) {
+        cart[i].count++;
+        updateCart();
+        return;
+      }
+    }
+    cart.push({ name: name, price: price, count: 1 });
+    updateCart();
+  }
+
+  function updateCart() {
+    var html = "";
+    var total = 0;
+
+    for (var i = 0; i < cart.length; i++) {
+      html +=
+        '<div style="margin:10px; padding:10px; border:1px solid #FFD700; border-radius:8px;">' +
+          '<strong>' + cart[i].name + '</strong><br>' +
+          'قیمت واحد: ' + cart[i].price + ' تومان<br>' +
+          '<div style="margin-top:8px;">' +
+            '<button onclick="decrease(' + i + ')">➖</button>' +
+            '<span style="margin:0 10px;">' + cart[i].count + '</span>' +
+            '<button onclick="increase(' + i + ')">➕</button>' +
+          '</div>' +
+        '</div>';
+
+      total += cart[i].price * cart[i].count;
+    }
+
+    document.getElementById('cart-items').innerHTML = html;
+    document.getElementById('total-price').innerHTML = total;
+    document.getElementById('cart-count').innerHTML = cart.length;
+  }
+
+  function increase(index) {
+    cart[index].count++;
+    updateCart();
+  }
+
+  function decrease(index) {
+    cart[index].count--;
+    if (cart[index].count === 0) {
+      cart.splice(index, 1);
+    }
+    updateCart();
+  }
+
+  function checkEmail() {
+    var email = document.getElementById("emailInput").value;
+    var message = document.getElementById("emailMessage");
+
+    if (email === "mmom26326@gmail.com") {
+      isAdmin = true;
+      message.style.color = "#00ff00";
+      message.innerHTML = "ایمیل تایید شد! شما اجازه افزودن و حذف دارید.";
+      document.getElementById("add-product").style.display = "block";
+    } else {
+      isAdmin = false;
+      message.style.color = "red";
+      message.innerHTML = "ایمیل اشتباه است. دسترسی مدیریت غیرفعال شد.";
+      document.getElementById("add-product").style.display = "none";
+    }
+  }
+
+  function onSectionChange() {
+    var select = document.getElementById("sectionSelect");
+    var newSectionInput = document.getElementById("newSectionName");
+    if (select.value === "new-section") {
+      newSectionInput.style.display = "block";
+    } else {
+      newSectionInput.style.display = "none";
+    }
+  }
+
+  function createNewSection(newSectionName) {
+    var id = 'sec-' + Date.now();
+    var galleryId = id + '-gallery';
+
+    var nav = document.querySelector('nav');
+    var a = document.createElement('a');
+    a.textContent = newSectionName;
+    a.setAttribute('onclick', "showSection('" + id + "')");
+    a.id = 'nav-' + id;
+    nav.appendChild(a);
+
+    var sec = document.createElement('section');
+    sec.id = id;
+    sec.innerHTML =
+      '<h2>' +
+        newSectionName +
+        ' <button class="menu-btn" onclick="requestDeleteSection(\'' + id + '\')" title="حذف کردن">⋮</button>' +
+      '</h2>' +
+      '<div class="gallery" id="' + galleryId + '"></div>';
+
+    var cartSection = document.getElementById('cart-page');
+    document.body.insertBefore(sec, cartSection);
+
+    var sel = document.getElementById('sectionSelect');
+    var opt = document.createElement('option');
+    opt.value = galleryId;
+    opt.textContent = newSectionName;
+    sel.appendChild(opt);
+
+    return galleryId;
+  }
+
+  function addNewProduct() {
+    if (!isAdmin) {
+      alert("شما اجازه افزودن محصول را ندارید.");
+      return;
+    }
+var name = document.getElementById("newName").value;
+    var price = document.getElementById("newPrice").value;
+    var image = document.getElementById("newImage").value;
+    var sectionValue = document.getElementById("sectionSelect").value;
+    var newSectionName = document.getElementById("newSectionName").value;
+
+    if (name === "" || price === "" || image === "") {
+      document.getElementById("addMessage").style.color = "red";
+      document.getElementById("addMessage").innerHTML = "لطفاً همه فیلدها را پر کنید.";
+      return;
+    }
+
+    if (sectionValue === "new-section") {
+      if (newSectionName.trim() === "") {
+        document.getElementById("addMessage").style.color = "red";
+        document.getElementById("addMessage").innerHTML = "نام قسمت جدید را وارد کنید.";
+        return;
+      }
+      sectionValue = createNewSection(newSectionName.trim());
+    }
+
+    var gallery = document.getElementById(sectionValue);
+    if (!gallery) {
+      document.getElementById("addMessage").style.color = "red";
+      document.getElementById("addMessage").innerHTML = "اشکال در انتخاب قسمت.";
+      return;
+    }
+
+    var newItem =
+      '<div class="product-item">' +
+        '<button class="menu-btn" onclick="requestDeleteProduct(this)" title="حذف کردن">⋮</button>' +
+        '<img src="' + image + '" onclick="openFull(\'' + image + '\')">' +
+        '<div class="price">' + price + ' تومان</div>' +
+        '<div class="btn" onclick="addToCart(\'' + name + '\',' + price + ')">افزودن به سبد خرید</div>' +
+      '</div>';
+
+    gallery.innerHTML += newItem;
+
+    document.getElementById("addMessage").style.color = "#00ff00";
+    document.getElementById("addMessage").innerHTML = "محصول با موفقیت اضافه شد!";
+  }
+
+  function requestDeleteProduct(btn) {
+    if (!isAdmin) {
+      alert("شما اجازه حذف کردن ندارید.");
+      return;
+    }
+    var ok = confirm("آیا اجازه حذف کردن می‌دهید؟");
+    if (!ok) return;
+
+    var item = btn.parentElement;
+    if (item && item.parentElement) {
+      item.parentElement.removeChild(item);
+    }
+  }
+
+  function requestDeleteSection(id) {
+    if (!isAdmin) {
+      alert("شما اجازه حذف کردن ندارید.");
+      return;
+    }
+    var ok = confirm("آیا اجازه حذف کردن می‌دهید؟");
+    if (!ok) return;
+
+    var sec = document.getElementById(id);
+    if (sec && sec.parentElement) {
+      sec.parentElement.removeChild(sec);
+    }
+
+    var navLink = document.getElementById('nav-' + id);
+    if (navLink && navLink.parentElement) {
+      navLink.parentElement.removeChild(navLink);
+    }
+
+    var galleryId = id + '-gallery';
+    var sel = document.getElementById('sectionSelect');
+    if (sel) {
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === galleryId) {
+          sel.remove(i);
+          break;
+        }
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
